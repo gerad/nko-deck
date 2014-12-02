@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Hacking a Hackathon</title>
+
+		<meta name="description" content="Lessons learned from running Node Knockout">
+		<meta name="author" content="Gerad Suyderhoud">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+		<script>
+			if( window.location.search.match( /print-pdf/gi ) ) {
+				var link = document.createElement( 'link' );
+				link.rel = 'stylesheet';
+				link.type = 'text/css';
+				link.href = 'css/print/pdf.css';
+				document.getElementsByTagName( 'head' )[0].appendChild( link );
+			}
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+		<style>
+			.rounded { border-radius: 8px; }
+			.white { background-color: white; }
+			.inline-block { display: inline-block; }
+			.padded { padding: 10px 20px !important; }
+			.shaded { box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); }
+			img.unstyled {
+				border: none !important;
+				box-shadow: none !important;
+				background: none !important;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+<section>
+	<img src="img/nko-logo.png" alt="Node Knockout" class="rounded">
+</section>
+
+<section>
+	<h2>500 teams</h2>
+	<h2>48 hours</h2>
+	<h2>1 winner</h2>
+
+	<p class="fragment"><small>Well, actually 7 winners&hellip;</small></p>
+</section>
+
+<section>
+	<h2>Not your typical web app</h2>
+	<pre><code data-trim>
+// state (getting pretty gross)
+app.disable('pre-registration');  // teaser
+app.disable('registration');      // months beforehand
+app.disable('pre-coding');        // week beforehand
+app.disable('coding');            // coding + several hours before
+app.disable('post-coding');       // after coding, before judging starts
+app.disable('voting');            // judging
+app.disable('post-voting');       // after judging, before winners
+app.disable('winners');           // after winners are selected
+	</code></pre>
+</section>
+
+<section>
+	<section>
+		<h1>Pre-Registration</h1>
+		<img src="img/preregistration.png" alt="Pre-Registration" class="unstyled">
+	</section>
+
+	<section>
+		<h2>Lesson: Blog Posts</h2>
+		<img src="img/blogposts.png" alt="Blog Posts" class="unstyled">
+	</section>
+
+	<!--
+	<section>
+		<h2>Lesson: A La Carte Sponsorships</h2>
+		<div class="white rounded padded shaded inline-block">
+			<img src="img/service.png" alt="Service Sponsorship" class="unstyled">
+			<img src="img/job-listing.png" alt="Job Listing Sponsorship" class="unstyled">
+			<img src="img/prize.png" alt="Prize Sponsorship" class="unstyled">
+		</div>
+	</section>
+	-->
+</section>
+
+<section>
+	<section>
+		<h1>Registration</h1>
+		<img src="img/registration.png" alt="Registration" class="unstyled">
+	</section>
+
+	<section>
+		<h2>Lesson: Timed Release</h2>
+		<img src="img/openingslots.png" alt="Opening Spots" class="rounded">
+	</section>
+</section>
+
+<section>
+	<section>
+		<h1>Pre-Coding</h1>
+		<div id="countdown-label">Node Knockout starts in</div>
+		<div id="countdown">
+			<strong id="countdown-days">01</strong>D
+			<strong id="countdown-hours">24</strong>H
+			<strong id="countdown-minutes">60</strong>M
+			<strong id="countdown-seconds">60</strong>S
+		</div>
+		<style type="text/css">
+			#countdown-label {
+				background-color: #ce3d49;
+				text-transform: uppercase;
+				line-height: 1.5em;
+				letter-spacing: 1px !important;
+				display: inline-block;
+				padding: 0 10px;
+				font-size: 22px;
+			}
+			#countdown {
+				font-size: 35px;
+				color: #888;
+				letter-spacing: 2px !important;
+			}
+			#countdown strong {
+				color: #EEE;
+				font-size: 40px
+			}
+		</style>
+		<script>
+			function update() {
+				function text(id, text) {
+					document.getElementById('countdown-' + id).innerHTML = text;
+				}
+
+				function pad(num, size) {
+					var s = "000000000" + num;
+					return s.substr(s.length - size);
+				}
+
+				var now = moment()
+					, start = moment.utc().startOf('day').add(2, 'days')
+					, diff = start.diff(now)
+					, durr = moment.duration(diff);
+				text('days', pad(durr.days(), 2));
+				text('hours', pad(durr.hours(), 2));
+				text('minutes', pad(durr.minutes(), 2));
+				text('seconds', pad(durr.seconds(), 2));
+			}
+
+			document.addEventListener("DOMContentLoaded", function(event) { 
+				setInterval(update, 1000);
+				update();
+			});
+		</script>
+	</section>
+
+	<section>
+		<h2>Lesson: README</h2>
+		<img src="img/readme.png" alt="README" class="unstyled">
+	</section>
+</section>
+
+<section>
+	<section>
+		<h1>Coding!</h1>
+		<img src="img/coding.png" alt="Coding Homepage" class="unstyled">
+	</section>
+
+	<section>
+		<h2>Lesson: Simple Steps</h2>
+		<img src="img/integration.png" alt="Undeployed Team Page" class="unstyled shaded rounded">
+	</section>
+
+	<section>
+		<h2>Completed Steps</h2>
+		<img src="img/integration2.png" alt="Deployed Team Page" class="unstyled shaded rounded">
+	</section>
+</section>
+
+<section>
+	<section>
+		<h1>Voting</h1>
+		<img src="img/voting.png" alt="Voting Homepage" class="unstyled">
+	</section>
+
+	<section>
+		<h2>Lesson: Judging Dashboard</h2>
+		<img src="img/judging-dashboard.png" alt="Judging Dashboard" class="unstyled">
+	</section>
+</section>
+
+<section>
+	<section>
+		<h1>Post-Voting</h1>
+		<img src="img/postvoting.png" alt="Judging Dashboard" class="unstyled">
+	</section>
+
+	<section>
+		<h2>Lesson: Voting Widget</h2>
+		<img src="img/nko-widget.png" alt="NKO Widget">	
+		<pre><code data-trim>
+<iframe src="http://nodeknockout.com/iframe/my-team" frameborder=0 scrolling=no allowtransparency=true width=115 height=25></iframe>
+		</code></pre>
+	</section>
+</section>
+
+<section>
+	<section>
+		<h1>Winners!</h1>
+		<img src="img/winners.png" alt="Winners" class="unstyled">
+	</section>
+
+	<section>
+		<h2>Lesson: No Prizes</h2>
+		<div class="white rounded shaded inline-block">
+			<img src="img/noprizes.png" alt="No Prizes" class="unstyled">
+		</div>
+	</section>
+</section>
+
+<section>
+	<h1>Q&amp;A</h1>
+</section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+		<script src="js/moment.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Parallax scrolling
+				// parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+				// parallaxBackgroundSize: '2100px 900px',
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
